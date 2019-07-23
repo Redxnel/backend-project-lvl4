@@ -1,5 +1,7 @@
-import path from 'path';
-import webpack from 'webpack';
+// import path from 'path';
+// import webpack from 'webpack';
+
+const path = require('path');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -18,20 +20,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          'postcss-loader',
-        ],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default'],
-    }),
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery',
+    //   jQuery: 'jquery',
+    //   'window.jQuery': 'jquery',
+    //   Popper: ['popper.js', 'default'],
+    // }),
   ],
 };

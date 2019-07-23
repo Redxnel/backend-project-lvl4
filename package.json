@@ -7,10 +7,11 @@
     "node": "10.15"
   },
   "scripts": {
+    "webpack": "webpack",
     "test": "jest",
     "eslint": "eslint",
     "start": "gulp server",
-    "build": "npx webpack -p --env production",
+    "build": "npm run webpack -- -p --env production",
     "postinstall": "npm run build"
   },
   "repository": {
@@ -52,8 +53,12 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
+    "babel-loader": "^8.0.6",
     "bootstrap": "^4.3.1",
     "css-loader": "^3.1.0",
     "debug": "^4.1.1",

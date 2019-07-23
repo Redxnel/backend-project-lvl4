@@ -1,6 +1,25 @@
+include /mixins/forms.pug
+
 doctype html
 html(lang="en")
   head
     title= Title
-  body
-    block content
+    script(src='/assets/main.js')
+  body 
+    nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
+      a.navbar-brand(href='/') Task Manager
+      button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expended="false" aria-label="Toggle navigation")
+        span.navbar-toggler-icon
+      .collapse.navbar-collapse(id="navbarCollapse")
+        ul.navbar-nav.mr-auto
+          li.nav-item.active
+            a.nav-link(href=urlFor('users')) Users
+              span.sr-only
+          li.nav-item
+            a.nav-link(href="#") Link
+        form.form-inline.mt-2.mt-md-0
+          button.btn.btn-outline-primary.my-4.mr-sm-2(type="submit") Sign Up
+          button.btn.btn-outline-succes.my-2.my-sm-0(type="submit") Sign In
+    .container
+      .jumbotron
+        block content

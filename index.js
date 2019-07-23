@@ -8,8 +8,11 @@ import koaLogger from 'koa-logger';
 import session from 'koa-generic-session';
 import flash from 'koa-flash-simple';
 import bodyparser from 'koa-bodyparser';
+import koaWebpack from 'koa-webpack';
+import serve from 'koa-static';
 import _ from 'lodash';
 
+import webpackConfig from './webpack.config';
 import addRoutes from './routes';
 import container from './container';
 
@@ -21,6 +24,13 @@ export default () => {
   app.keys = ['secretKey'];
   app.use(session(app));
   app.use(flash());
+  app.use(async (ctx, next) => {
+    ctx.state = {
+      flash: ctx.flash,
+      isSignedIn: () => ctx.session.userId !== undefined,
+    };
+    await next();
+  });
   app.use(bodyparser());
   app.use(methodOverride((req) => {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -28,6 +38,15 @@ export default () => {
     }
     return null;
   }));
+  app.use(serve(path.join(__dirname, 'public')));
+
+  container.logger(`NODE_ENV: ${process.env.NODE_ENV}`);
+  if (process.env.NODE_ENV === 'development') {
+    koaWebpack({
+      config: webpackConfig,
+    }).then(m => app.use(m));
+  }
+
   app.use(koaLogger());
   const router = new Router();
   addRoutes(router, container);

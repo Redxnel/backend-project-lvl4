@@ -3,10 +3,7 @@ import repl from 'repl';
 import container from './container';
 import getServer from '.';
 
-// gulp.task('default', console.log('hello!'));
-
 gulp.task('console', () => {
-  // gutil.log = gutil.noop;
   const replServer = repl.start({
     prompt: 'Application console > ',
   });

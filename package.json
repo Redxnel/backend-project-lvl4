@@ -1,0 +1,73 @@
+{
+  "name": "task-manager",
+  "version": "0.0.1",
+  "description": "This is a task manager.",
+  "main": "index.js",
+  "engines": {
+    "node": "10.15"
+  },
+  "scripts": {
+    "test": "jest",
+    "eslint": "eslint",
+    "start": "gulp server",
+    "build": "npx webpack -p --env production",
+    "postinstall": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Redxnel/backend-project-lvl4.git"
+  },
+  "keywords": [
+    "task",
+    "manager",
+    "help"
+  ],
+  "author": "redxnel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Redxnel/backend-project-lvl4/issues"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverage": true
+  },
+  "homepage": "https://github.com/Redxnel/backend-project-lvl4#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.13.0",
+    "jest": "^24.8.0",
+    "jest-cli": "^24.8.0",
+    "jest-supertest-matchers": "0.0.2",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.0.0",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "gulp-util": "^3.0.8",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-flash-simple": "0.0.3",
+    "koa-generic-session": "^2.0.1",
+    "koa-logger": "^3.2.1",
+    "koa-methodoverride": "^2.0.0",
+    "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.15",
+    "path": "^0.12.7",
+    "rollbar": "^2.8.1"
+  }
+}

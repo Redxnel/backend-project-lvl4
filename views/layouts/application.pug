@@ -1,3 +1,5 @@
+include /mixins/forms.pug
+
 doctype html
 html(lang="en")
   head
@@ -13,11 +15,16 @@ html(lang="en")
           li.nav-item.active
             a.nav-link(href=urlFor('users')) Users
               span.sr-only
-          li.nav-item
-            a.nav-link(href="#") Link
-        form.form-inline.mt-2.mt-md-0
-          button.btn.btn-outline-primary.my-4.mr-sm-2(type="submit") Sign Up
-          button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Sign In
+        ul.navbar-nav
+          form.form-inline.mt-2.mt-md-0
+            if isSignedIn()
+              li.nav-item
+                a.nav-link.btn.btn-outline-danger.my-2.my-sm-0(href=urlFor('sessionDelete') data-method='delete' rel='nofollow') Sign Out
+            else
+              li.nav-item
+                a.nav-link.btn.btn-outline-primary.my-4.mr-sm-2(href=urlFor('newUser')) Sign Up
+              li.nav-item
+                a.nav-link.btn.btn-outline-success.my-2.my-sm-0(href=urlFor('newSession')) Sign In
     .container
       .jumbotron
         block content

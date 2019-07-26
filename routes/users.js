@@ -1,5 +1,5 @@
 import buildFormObj from '../lib/formObjectBuilder';
-import { User } from '../models'; // eslint-disable-line
+import { User } from '../models';
 
 export default (router) => {
   router

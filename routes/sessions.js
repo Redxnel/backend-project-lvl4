@@ -1,6 +1,6 @@
 import buildFormObj from '../lib/formObjectBuilder';
 import { encrypt } from '../lib/secure';
-import { User } from '../models'; // eslint-disable-line
+import { User } from '../models';
 
 export default (router) => {
   router

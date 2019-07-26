@@ -1,5 +1,3 @@
-'use strict'; // eslint-disable-line
-
 import configJSON from '../config/config.json';
 
 const fs = require('fs');

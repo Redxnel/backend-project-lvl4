@@ -1,7 +1,11 @@
 extends /layouts/application.pug
 
 block content
-  +formFor(f, { url: urlFor('session'), method: 'post' })
-    +input(f, 'email', 'E-Mail')
-    +input(f, 'password', 'Password', { as: 'password' })
-    +button('Sign In')
+  .text-center
+    h1(style="font-family: 'Fredoka One', cursive; color: green") Sign in
+    .row.justify-content-center.pb-5
+      .col-12.col-lg-4(style="font-family: 'Arbutus Slab', serif;")
+        +formFor(f, { url: urlFor('session'), method: 'post' })
+          +input(f, 'email', { as: 'email', placeholder: 'Email address', id: 'inputEmail'})
+          +input(f, 'password', { as: 'password', placeholder: 'Password', id: 'inputPassword' })
+          button.btn.btn-lg.btn-success.btn-block(type='submit') Sign in

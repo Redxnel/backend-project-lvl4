@@ -2,12 +2,13 @@ extends /layouts/application.pug
 
 block content
   .text-center
-    h1(style="font-family: 'Fredoka One', cursive; color: blue") Create your profile
+    h1(style="font-family: 'Fredoka One', cursive; color: purple") Your Profile
     .row.justify-content-center.pb-5
       .col-12.col-lg-4(style="font-family: 'Arbutus Slab', serif;")
-        +formFor(f, { url: urlFor('users'), method: 'post' })
+        +formFor(f, { url: urlFor('profile'), method: 'patch' })
           +input(f, 'email', { as: 'email', placeholder: 'Email address', id: 'inputEmail' })
           +input(f, 'firstName', { as: 'firstName', placeholder: 'First name', id: 'inputFirstName' })
           +input(f, 'lastName', { as: 'lastName', placeholder: 'Last name', id: 'inputLastName' })
-          +input(f, 'password', { as: 'password',  placeholder: 'Password', id: 'inputPassword'})
-          button.btn.btn-lg.btn-primary.btn-block Sign up
+          button.btn.btn-lg.btn-success.btn-block Save changes
+        
+        a.btn.btn-lg.btn-danger.btn-block(href=urlFor('deleteUser') data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the profile?') Delete profile

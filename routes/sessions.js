@@ -17,7 +17,7 @@ export default (router) => {
       });
       const error = { errors: [] };
       if (!user) {
-        error.errors.push({ path: 'email', message: 'The user is not found' });
+        error.errors.push({ path: 'email', message: 'The user is not found!' });
       }
 
       if (user && user.passwordDigest === encrypt(password)) {
@@ -27,7 +27,7 @@ export default (router) => {
       }
 
       ctx.flash.set('email or password were wrong');
-      error.errors.push({ path: 'password', message: 'Incorrect password' });
+      error.errors.push({ path: 'password', message: 'Incorrect password!' });
       ctx.render('sessions/new', { f: buildFormObj({ email }, error) });
     })
     .delete('sessionDelete', '/session', async (ctx) => {

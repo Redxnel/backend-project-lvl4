@@ -1,5 +1,13 @@
+import { User } from '../models'; // eslint-disable-line
+
 export default (router) => {
-  router.get('root', '/', (ctx) => {
-    ctx.render('welcome/index');
+  router.get('root', '/', async (ctx) => {
+    if (ctx.state.isSignedIn()) {
+      const { userId } = ctx.session;
+      const user = await User.findByPk(userId);
+      ctx.render('welcome/index', { user });
+    } else {
+      ctx.render('welcome/index');
+    }
   });
 };

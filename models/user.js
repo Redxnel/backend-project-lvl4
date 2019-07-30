@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        isEmail: true,
+        isEmail: { msg: 'Invalid email address!' },
       },
     },
     passwordDigest: {
@@ -25,7 +25,10 @@ export default (sequelize, DataTypes) => {
         return value;
       },
       validate: {
-        len: [6, +Infinity],
+        len: {
+          args: [6, +Infinity],
+          msg: 'Create a password above 6 symbols!',
+        },
       },
     },
   }, {

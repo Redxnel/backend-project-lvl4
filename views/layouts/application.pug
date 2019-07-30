@@ -4,27 +4,36 @@ doctype html
 html(lang="en")
   head
     title= Title
+    link(href="https://fonts.googleapis.com/css?family=Arbutus+Slab&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet")
     script(src='/assets/main.js')
-  body
+    script(src='https://kit.fontawesome.com/54f8975523.js')
+  body(style="font-family: 'Arbutus Slab', serif;")
     nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
-      a.navbar-brand(href='/') Task Manager
+      a.navbar-brand(style="font-family: 'Dancing Script', cursive; font-size: 36px;" href='/') Task Manager
       button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expended="false" aria-label="Toggle navigation")
         span.navbar-toggler-icon
       .collapse.navbar-collapse(id="navbarCollapse")
         ul.navbar-nav.mr-auto
           li.nav-item.active
-            a.nav-link(href=urlFor('users')) Users
-              span.sr-only
+            a.nav-link.fas.fa-users.fa-lg(href=urlFor('users')) 
+              | Users
         ul.navbar-nav
           form.form-inline.mt-2.mt-md-0
             if isSignedIn()
               li.nav-item
-                a.nav-link.btn.btn-outline-danger.my-2.my-sm-0(href=urlFor('sessionDelete') data-method='delete' rel='nofollow') Sign Out
+                // Link to user profile
+                a.nav-link.fas.fa-user-edit.fa-lg(style="color: Dodgerblue;" href=urlFor('profile'))
+                // Link to change the password
+                a.nav-link.fas.fa-user-cog.fa-lg(style="color: Dodgerblue;" href=urlFor('changePassword'))
+                // Sign out
+                a.nav-link.fas.fa-sign-out-alt.fa-lg(style="color: Tomato;" href=urlFor('sessionDelete') data-method='delete' rel='nofollow')
             else
               li.nav-item
-                a.nav-link.btn.btn-outline-primary.my-4.mr-sm-2(href=urlFor('newUser')) Sign Up
+                a.nav-link.btn.btn-outline-primary.mr-sm-2(href=urlFor('newUser')) Sign Up
               li.nav-item
-                a.nav-link.btn.btn-outline-success.my-2.my-sm-0(href=urlFor('newSession')) Sign In
+                a.nav-link.btn.btn-outline-success.my-sm-0(href=urlFor('newSession')) Sign In
     .container
       .jumbotron
         block content

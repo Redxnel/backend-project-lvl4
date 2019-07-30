@@ -75,6 +75,12 @@ export default (router) => {
       const user = await User.findByPk(userId);
       const error = { errors: [] };
 
+      if (!newPassword) {
+        error.errors.push({ path: 'newPassword', message: 'Enter new password!' });
+        ctx.render('users/changePassword', { f: buildFormObj({}, error) });
+        return;
+      }
+
       if (newPassword !== confirmPassword) {
         error.errors.push({ path: 'confirmPassword', message: 'Passwords do not match' });
         ctx.render('users/changePassword', { f: buildFormObj({}, error) });

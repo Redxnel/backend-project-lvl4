@@ -1,0 +1,15 @@
+extends /layouts/application.pug
+
+block content
+  .text-center
+    h1(style="font-family: 'Fredoka One', cursive;") Edit task
+    .row.justify-content-center.pb-5
+      .col-12.col-lg-4
+        +formFor(f, { url: urlFor('editTask', f.object.id), method: 'patch' })
+          +input(f, 'name', { as: 'name', placeholder: 'Name', id: 'inputName' })
+          +input(f, 'description', { as: 'description', placeholder: 'Description', id: 'inputDescription' })
+          +select(f, 'assignedTo', 'Assigned to', users, executor)
+          +select(f, 'status', 'Choose the status', taskStatuses, currentStatus)
+          +input(f, 'tags', { as: 'tags', placeholder: 'Tags', id: 'inputTags' })
+          button.btn.btn-lg.btn-success.btn-block Save changes
+          a.btn.btn-lg.btn-warning.btn-block(href=urlFor('tasks')) Cancel

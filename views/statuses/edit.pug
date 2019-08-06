@@ -1,0 +1,11 @@
+extends /layouts/application.pug
+
+block content
+  .text-center
+    h1(style="font-family: 'Fredoka One', cursive; color: orange") Edit status
+    .row.justify-content-center.pb-5
+      .col-12.col-lg-4
+        +formFor(f, { url: urlFor('editStatus', f.object.id), method: 'patch' })
+          +input(f, 'name', { as: 'name', placeholder: 'Status name'})
+          button.btn.btn-success.btn-lg.btn-block Save changes
+          a.btn.btn-warning.btn-lg.btn-block(href=urlFor('statuses')) Cancel

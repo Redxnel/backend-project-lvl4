@@ -1,0 +1,58 @@
+extends /layouts/application.pug
+
+block content
+  h1.text-center Tasks
+
+  p
+  a.btn.btn-info.btn-sm(aria-expanded=false href=urlFor('tasks', { query: { creator: `${userId}` } })) My tasks
+  button.btn.btn-info.btn-sm(type='button' data-toggle='collapse' data-target='#collapseFilters' aria-expanded=false) Filter by:
+  .collapse(id='collapseFilters')
+    .card.text-white.bg-dark.mb-3.card-body
+      +formFor({ url: urlFor('tasks') })
+        .form-row.align-items-center
+          .col-sm-3.my-1
+            label Creator
+            select.form-control(name='creator')
+              option(selected value='')
+              for user in users
+                option(value=`${user.id}`)= user.fullName 
+          .col-sm-3.my-1
+            label Status
+            select.form-control(name='status')
+              option(selected value='')
+              for status in taskStatuses
+                option(value=`${status.id}`)= status.name
+          .col-sm-3.my-1
+            label Assigned to
+            select.form-control(name='assignedTo')
+              option(selected value='')
+              for user in users
+                option(value=`${user.id}`)= user.fullName
+        .form-group
+          button.btn.btn-success(type='submit') Apply
+
+  table.table.table-dark.table-striped
+    thead
+      tr
+        th Task
+        th Description
+        th Creator
+        th Executor
+        th Status
+        th Tags
+        th Actions
+    tbody
+      each task in tasks
+        tr
+          td= task.name
+          td= task.description
+          td= task.Creator.fullName
+          td= task.Executor.fullName
+          td= task.Status.name
+          td 
+            each tag in task.Tags
+              a.text-success(href=urlFor('tasks', { query: { searchTags: `${tag.name}` } }))= tag.name
+          td
+            a.breadcrumb-item.text-warning(href=urlFor('editTask', task.id)) Edit
+            a.breadcrumb-item.text-danger(href=urlFor('deleteTask', task.id) data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the task?') Delete
+              

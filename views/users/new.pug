@@ -4,7 +4,7 @@ block content
   .text-center
     h1(style="font-family: 'Fredoka One', cursive; color: blue") Create your profile
     .row.justify-content-center.pb-5
-      .col-12.col-lg-4(style="font-family: 'Arbutus Slab', serif;")
+      .col-12.col-lg-4
         +formFor(f, { url: urlFor('users'), method: 'post' })
           +input(f, 'email', { as: 'email', placeholder: 'Email address', id: 'inputEmail' })
           +input(f, 'firstName', { as: 'firstName', placeholder: 'First name', id: 'inputFirstName' })

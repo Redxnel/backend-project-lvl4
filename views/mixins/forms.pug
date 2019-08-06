@@ -16,3 +16,15 @@ mixin input(f, property, options = { as: 'text', placeholder: 'text', id: 'text'
     input(name=getInputName(f, property) class='form-control' type=options['as'] placeholder=options['placeholder'] id=options['id'] value=`${value}`)
     if f.errors[property]
       .form-control-feedback(style="color: red;")= f.errors[property].map(({ message }) => message).join('. ')
+
+mixin select(f, property, placeholder, items, currentItem = { id: 0 })
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group
+    label= placeholder
+    select(name=getInputName(f, property) class='form-control')
+      for item in items 
+        - const name = item.name === undefined ? item.fullName : item.name
+        if item.id === currentItem.id
+          option(selected value=`${item.id}`)= name
+        else
+          option(value=`${item.id}`)= name

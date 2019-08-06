@@ -19,6 +19,11 @@ html(lang="en")
           li.nav-item.active
             a.nav-link.fas.fa-users.fa-lg(href=urlFor('users')) 
               | Users
+            if isSignedIn()
+              a.nav-link.fas.fa-tasks.fa-lg(href=urlFor('tasks'))
+                | Tasks
+              a.nav-link.fas.fa-plus.fa-lg(href=urlFor('newTask'))
+              a.nav-link.fas.fa-info-circle.fa-lg(href=urlFor('statuses'))
         ul.navbar-nav
           form.form-inline.mt-2.mt-md-0
             if isSignedIn()

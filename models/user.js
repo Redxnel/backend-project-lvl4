@@ -6,7 +6,6 @@ export default (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
-      unique: true,
       validate: {
         isEmail: { msg: 'Invalid email address!' },
       },
@@ -38,5 +37,11 @@ export default (sequelize, DataTypes) => {
       },
     },
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.Task, { as: 'Executor', foreignKey: 'assignedTo' });
+    User.hasMany(models.Task, { as: 'Creator', foreignKey: 'creator' });
+  };
+
   return User;
 };

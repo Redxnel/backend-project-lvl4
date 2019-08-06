@@ -20,9 +20,11 @@ export default (router) => {
       const emails = users.map(u => u.email);
       const error = { errors: [] };
 
+      // The uniqueness check is here
+      // because in the form of the user does not display messages during registration
       if (emails.includes(form.form.email)) {
         error.errors.push({ path: 'email', message: 'This email already exists!' });
-        ctx.render('users/new', { f: buildFormObj({}, error) });
+        ctx.render('users/new', { f: buildFormObj(user, error) });
         return;
       }
 

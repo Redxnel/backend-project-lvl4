@@ -22,11 +22,11 @@ export default (router) => {
 
       if (user && user.passwordDigest === encrypt(password)) {
         ctx.session.userId = user.id;
+        ctx.flash.set('You are authorized!');
         ctx.redirect(router.url('root'));
         return;
       }
 
-      ctx.flash.set('email or password were wrong');
       error.errors.push({ path: 'password', message: 'Incorrect password!' });
       ctx.render('sessions/new', { f: buildFormObj({ email }, error) });
     })

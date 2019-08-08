@@ -5,29 +5,18 @@ import { User } from '../models'; // eslint-disable-line
 
 export default (router) => {
   router
-    .get('users', '/users', async (ctx) => {
+    .get('users#index', '/users', async (ctx) => {
       const users = await User.findAll();
-      ctx.render('users', { users });
+      const { userId } = ctx.session;
+      ctx.render('users', { users, userId });
     })
-    .get('newUser', '/users/new', (ctx) => {
+    .get('users#new', '/users/new', (ctx) => {
       const user = User.build();
       ctx.render('users/new', { f: buildFormObj(user) });
     })
-    .post('users', '/users', async (ctx) => {
+    .post('users#create', '/users', async (ctx) => {
       const { request: { body: form } } = ctx;
       const user = User.build(form.form);
-      const users = await User.findAll();
-      const emails = users.map(u => u.email);
-      const error = { errors: [] };
-
-      // The uniqueness check is here
-      // because in the form of the user does not display messages during registration
-      if (emails.includes(form.form.email)) {
-        error.errors.push({ path: 'email', message: 'This email already exists!' });
-        ctx.render('users/new', { f: buildFormObj(user, error) });
-        return;
-      }
-
       try {
         await user.save();
         ctx.flash.set('Your profile has been created');
@@ -37,24 +26,24 @@ export default (router) => {
         ctx.render('users/new', { f: buildFormObj(user, err) });
       }
     })
-    .get('profile', '/users/profile', checkAuth, async (ctx) => {
+    .get('profile#edit', '/users/profile/:id/edit', checkAuth, async (ctx) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
-      ctx.render('users/profile', { f: buildFormObj(user) });
+      ctx.render('users/profile', { f: buildFormObj(user), userId });
     })
-    .patch('profile', '/users/profile', checkAuth, async (ctx) => {
+    .patch('profile#update', '/users/profile/:id', checkAuth, async (ctx) => {
       const { userId } = ctx.session;
       const { request: { body: form } } = ctx;
       const user = await User.findByPk(userId);
       try {
         await user.update(form.form);
         ctx.flash.set('Your profile has been updated');
-        ctx.redirect(router.url('profile'));
+        ctx.redirect(router.url('profile#update'));
       } catch (error) {
-        ctx.render('users/profile', { f: buildFormObj(user, error) });
+        ctx.render('users/profile', { f: buildFormObj(user, error), userId });
       }
     })
-    .delete('deleteUser', '/users', checkAuth, async (ctx) => {
+    .delete('profile#destroy', '/users/profile/:id', checkAuth, async (ctx) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
       try {
@@ -63,15 +52,15 @@ export default (router) => {
         ctx.flash.set('Your profile has been deleted');
         ctx.redirect(router.url('root'));
       } catch (error) {
-        ctx.render(router.url('profile'));
+        ctx.render(router.url('profile#show'));
       }
     })
-    .get('changePassword', '/users/changePassword', checkAuth, async (ctx) => {
+    .get('password#edit', '/users/settings/:id/edit', checkAuth, async (ctx) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
-      ctx.render('users/changePassword', { f: buildFormObj(user) });
+      ctx.render('users/changePassword', { f: buildFormObj(user), userId });
     })
-    .patch('changePassword', '/users/changePassword', checkAuth, async (ctx) => {
+    .patch('password#update', '/users/settings/:id', checkAuth, async (ctx) => {
       const { userId } = ctx.session;
       const { password, newPassword, confirmPassword } = ctx.request.body.form;
       const user = await User.findByPk(userId);
@@ -79,13 +68,13 @@ export default (router) => {
 
       if (!newPassword) {
         error.errors.push({ path: 'newPassword', message: 'Enter new password!' });
-        ctx.render('users/changePassword', { f: buildFormObj({}, error) });
+        ctx.render('users/changePassword', { f: buildFormObj({}, error), userId });
         return;
       }
 
       if (newPassword !== confirmPassword) {
         error.errors.push({ path: 'confirmPassword', message: 'Passwords do not match' });
-        ctx.render('users/changePassword', { f: buildFormObj({}, error) });
+        ctx.render('users/changePassword', { f: buildFormObj({}, error), userId });
         return;
       }
 
@@ -96,11 +85,11 @@ export default (router) => {
           ctx.redirect(router.url('root'));
           return;
         } catch (e) {
-          ctx.render('users/changePassword', { f: buildFormObj(user, e) });
+          ctx.render('users/changePassword', { f: buildFormObj(user, e), userId });
         }
       } else {
         error.errors.push({ path: 'password', message: 'Incorrect password!' });
       }
-      ctx.render('users/changePassword', { f: buildFormObj({}, error) });
+      ctx.render('users/changePassword', { f: buildFormObj({}, error), userId });
     });
 };

@@ -1,7 +1,6 @@
 extends /layouts/application.pug
 
 block content
-  link(href='https://fonts.googleapis.com/css?family=Bevan&display=swap' rel='stylesheet')
   if isSignedIn()
     h2(style="font-family: 'Bevan', cursive;") Hello, #{user.firstName}!
   else

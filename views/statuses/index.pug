@@ -2,7 +2,7 @@ extends /layouts/application.pug
 
 block content
   .text-center
-    h1(style="font-family: 'Fredoka One', cursive; color: green") Statuses
+    h1 Statuses
     .row.justify-content-center.pb-5
       .col-12.col-lg-4
         each taskStatus in taskStatuses
@@ -11,9 +11,9 @@ block content
             .input-group-append
               button.btn.btn-outline-secondary.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
               .dropdown-menu
-                a.dropdown-item(href=urlFor('editStatus', taskStatus.id)) Edit
-                a.dropdown-item(href=urlFor('editStatus', taskStatus.id) data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the status?') Delete
+                a.dropdown-item(href=urlFor('statuses#edit', taskStatus.id)) Edit
+                a.dropdown-item(href=urlFor('statuses#destroy', taskStatus.id) data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the status?') Delete
         br
-        +formFor(f, { url: urlFor('statuses'), method: 'post' })
+        +formFor(f, { url: urlFor('statuses#create'), method: 'post' })
           +input(f, 'name', { as: 'name', id: 'inputName'})
           button.btn.btn-lg.btn-success.btn-block Add new status

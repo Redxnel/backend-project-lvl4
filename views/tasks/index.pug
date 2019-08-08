@@ -4,11 +4,11 @@ block content
   h1.text-center Tasks
 
   p
-  a.btn.btn-info.btn-sm(aria-expanded=false href=urlFor('tasks', { query: { creator: `${userId}` } })) My tasks
+  a.btn.btn-info.btn-sm(aria-expanded=false href=urlFor('tasks#index', { query: { creator: `${userId}` } })) My tasks
   button.btn.btn-info.btn-sm(type='button' data-toggle='collapse' data-target='#collapseFilters' aria-expanded=false) Filter by:
   .collapse(id='collapseFilters')
     .card.text-white.bg-dark.mb-3.card-body
-      +formFor({ url: urlFor('tasks') })
+      +formFor({ url: urlFor('tasks#index') })
         .form-row.align-items-center
           .col-sm-3.my-1
             label Creator
@@ -51,8 +51,8 @@ block content
           td= task.Status.name
           td 
             each tag in task.Tags
-              a.text-success(href=urlFor('tasks', { query: { searchTags: `${tag.name}` } }))= tag.name
+              a.text-success(href=urlFor('tasks#index', { query: { searchTags: `${tag.name}` } }))= tag.name
           td
-            a.breadcrumb-item.text-warning(href=urlFor('editTask', task.id)) Edit
-            a.breadcrumb-item.text-danger(href=urlFor('deleteTask', task.id) data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the task?') Delete
+            a.breadcrumb-item.text-warning(href=urlFor('tasks#edit', task.id)) Edit
+            a.breadcrumb-item.text-danger(href=urlFor('tasks#destroy', task.id) data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the task?') Delete
               

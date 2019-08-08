@@ -4,11 +4,11 @@ import { User } from '../models'; // eslint-disable-line
 
 export default (router) => {
   router
-    .get('newSession', '/session/new', async (ctx) => {
+    .get('session#new', '/session/new', async (ctx) => {
       const data = {};
       ctx.render('sessions/new', { f: buildFormObj(data) });
     })
-    .post('session', '/session', async (ctx) => {
+    .post('session#update', '/session', async (ctx) => {
       const { email, password } = ctx.request.body.form;
       const user = await User.findOne({
         where: {
@@ -30,7 +30,7 @@ export default (router) => {
       error.errors.push({ path: 'password', message: 'Incorrect password!' });
       ctx.render('sessions/new', { f: buildFormObj({ email }, error) });
     })
-    .delete('sessionDelete', '/session', async (ctx) => {
+    .delete('session#destroy', '/session', async (ctx) => {
       ctx.session = {};
       ctx.redirect(router.url('root'));
     });

@@ -2,12 +2,12 @@ extends /layouts/application.pug
 
 block content
   .text-center
-    h1(style="font-family: 'Fredoka One', cursive; color: purple") Your Profile
+    h1 Your Profile
     .row.justify-content-center.pb-5
-      .col-12.col-lg-4(style="font-family: 'Arbutus Slab', serif;")
-        +formFor(f, { url: urlFor('profile'), method: 'patch' })
+      .col-12.col-lg-4
+        +formFor(f, { url: urlFor('profile#update', userId), method: 'patch' })
           +input(f, 'email', { as: 'email', placeholder: 'Email address', id: 'inputEmail' })
           +input(f, 'firstName', { as: 'firstName', placeholder: 'First name', id: 'inputFirstName' })
           +input(f, 'lastName', { as: 'lastName', placeholder: 'Last name', id: 'inputLastName' })
           button.btn.btn-lg.btn-success.btn-block Save changes
-          a.btn.btn-lg.btn-danger.btn-block(href=urlFor('deleteUser') data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the profile?') Delete profile
+          a.btn.btn-lg.btn-danger.btn-block(href=urlFor('profile#destroy', userId) data-method='delete' rel='nofollow' data-confirm='Are you sure you want to delete the profile?') Delete profile

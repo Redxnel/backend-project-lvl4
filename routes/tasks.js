@@ -15,7 +15,7 @@ const findOrCreateTags = async (tags) => {
 
 export default (router) => {
   router
-    .get('tasks', '/tasks', checkAuth, async (ctx) => {
+    .get('tasks#index', '/tasks', checkAuth, async (ctx) => {
       const { userId } = ctx.session;
       const users = await User.findAll();
       const taskStatuses = await TaskStatus.findAll();
@@ -54,12 +54,13 @@ export default (router) => {
         tasks, users, taskStatuses, userId,
       });
     })
-    .get('newTask', '/tasks/new', checkAuth, async (ctx) => {
+    .get('tasks#new', '/tasks/new', checkAuth, async (ctx) => {
+      const { userId } = ctx.session;
       const task = await Task.build();
       const users = await User.findAll();
-      ctx.render('tasks/new', { f: buildFormObj(task), users });
+      ctx.render('tasks/new', { f: buildFormObj(task), users, userId });
     })
-    .post('tasks', '/tasks', checkAuth, async (ctx) => {
+    .post('tasks#create', '/tasks', checkAuth, async (ctx) => {
       const { request: { body: form } } = ctx;
       const { userId } = ctx.session;
       const taskStatus = await TaskStatus.findOne({
@@ -75,14 +76,17 @@ export default (router) => {
       try {
         await task.save();
         await task.setTags(arrTags);
-        ctx.redirect(router.url('tasks'));
+        ctx.redirect(router.url('tasks#index'));
       } catch (error) {
         const taskStatuses = await TaskStatus.findAll();
         const users = await User.findAll();
-        ctx.render('tasks/new', { f: buildFormObj(task, error), taskStatuses, users });
+        ctx.render('tasks/new', {
+          f: buildFormObj(task, error), taskStatuses, users, userId,
+        });
       }
     })
-    .get('editTask', '/tasks/:id/edit', checkAuth, async (ctx) => {
+    .get('tasks#edit', '/tasks/:id/edit', checkAuth, async (ctx) => {
+      const { userId } = ctx.session;
       const task = await Task.findByPk(ctx.params.id);
       const taskStatuses = await TaskStatus.findAll();
       const users = await User.findAll();
@@ -105,9 +109,10 @@ export default (router) => {
         users,
         executor,
         currentStatus,
+        userId,
       });
     })
-    .patch('editTask', '/tasks/:id/edit', checkAuth, async (ctx) => {
+    .patch('tasks#update', '/tasks/:id', checkAuth, async (ctx) => {
       const { request: { body: form } } = ctx;
       const tags = parseTags(form.form.tags);
       const arrTags = await findOrCreateTags(tags);
@@ -115,17 +120,17 @@ export default (router) => {
       try {
         await task.update(form.form);
         await task.setTags(arrTags);
-        ctx.redirect(router.url('tasks'));
+        ctx.redirect(router.url('tasks#index'));
       } catch (error) {
         const tasks = await Task.findAll({ include: ['Creator', 'Executor', 'Status'] });
         ctx.render('tasks', { f: buildFormObj(task, error), tasks });
       }
     })
-    .delete('deleteTask', '/tasks/:id/edit', checkAuth, async (ctx) => {
+    .delete('tasks#destroy', '/tasks/:id', checkAuth, async (ctx) => {
       const task = await Task.findByPk(ctx.params.id);
       try {
         await task.destroy();
-        ctx.redirect(router.url('tasks'));
+        ctx.redirect(router.url('tasks#index'));
       } catch (error) {
         const tasks = await Task.findAll({ include: ['Creator', 'Executor', 'Status'] });
         ctx.render('tasks', { f: buildFormObj(task, error), tasks });

@@ -26,11 +26,11 @@ html(lang="en")
             if isSignedIn()
               li.nav-item
                 // Link to user profile
-                a.nav-link.fas.fa-user-edit.fa-lg(style="color: Dodgerblue;" href=urlFor('profile#edit', userId))
+                a.nav-link.fas.fa-user-edit.fa-lg.text-primary(href=urlFor('profile#edit', userId))
                 // Link to change the password
-                a.nav-link.fas.fa-user-cog.fa-lg(style="color: Dodgerblue;" href=urlFor('password#edit', userId))
+                a.nav-link.fas.fa-user-cog.fa-lg.text-primary(href=urlFor('password#edit', userId))
                 // Sign out
-                a.nav-link.fas.fa-sign-out-alt.fa-lg(style="color: Tomato;" href=urlFor('session#destroy') data-method='delete' rel='nofollow')
+                a.nav-link.fas.fa-sign-out-alt.fa-lg.text-danger(href=urlFor('session#destroy') data-method='delete' rel='nofollow')
             else
               li.nav-item
                 a.nav-link.btn.btn-outline-primary.mr-sm-2(href=urlFor('users#new')) Sign Up

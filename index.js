@@ -10,8 +10,10 @@ import flash from 'koa-flash-simple';
 import bodyparser from 'koa-bodyparser';
 import koaWebpack from 'koa-webpack';
 import serve from 'koa-static';
+import koaI18next from 'koa-i18next';
 import _ from 'lodash';
 
+import getI18next from './lib/i18next';
 import webpackConfig from './webpack.config';
 import addRoutes from './routes';
 import container from './container';
@@ -48,6 +50,10 @@ export default () => {
   }
 
   app.use(koaLogger());
+
+  const i18next = getI18next();
+  app.use(koaI18next(i18next, { next: true }));
+
   const router = new Router();
   addRoutes(router, container);
   app

@@ -17,7 +17,7 @@ export default (router) => {
       const taskStatuses = await TaskStatus.findAll();
       try {
         await taskStatus.save();
-        ctx.flash.set('Status has been created!');
+        ctx.flash.set(ctx.t('flash-messages:statuses.create'));
         ctx.redirect(router.url('statuses#index'));
       } catch (err) {
         ctx.render('statuses', { f: buildFormObj(taskStatus, err), taskStatuses, userId });
@@ -33,7 +33,7 @@ export default (router) => {
       const taskStatus = await TaskStatus.findByPk(ctx.params.id);
       try {
         await taskStatus.update(form.form);
-        ctx.flash.set('Status has been updated!');
+        ctx.flash.set(ctx.t('flash-messages:statuses.update'));
         ctx.redirect(router.url('statuses#index'));
       } catch (error) {
         const taskStatuses = await TaskStatus.findAll();
@@ -44,7 +44,7 @@ export default (router) => {
       const taskStatus = await TaskStatus.findByPk(ctx.params.id);
       try {
         await taskStatus.destroy();
-        ctx.flash.set('Status has been deleted!');
+        ctx.flash.set(ctx.t('flash-messages:statuses.destroy'));
         ctx.redirect(router.url('statuses#index'));
       } catch (error) {
         const taskStatuses = await TaskStatus.findAll();

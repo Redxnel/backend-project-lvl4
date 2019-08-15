@@ -76,6 +76,7 @@ export default (router) => {
       try {
         await task.save();
         await task.setTags(arrTags);
+        ctx.flash.set(ctx.t('flash-messages:tasks.create'));
         ctx.redirect(router.url('tasks#index'));
       } catch (error) {
         const taskStatuses = await TaskStatus.findAll();
@@ -120,6 +121,7 @@ export default (router) => {
       try {
         await task.update(form.form);
         await task.setTags(arrTags);
+        ctx.flash.set(ctx.t('flash-messages:tasks.update'));
         ctx.redirect(router.url('tasks#index'));
       } catch (error) {
         const tasks = await Task.findAll({ include: ['Creator', 'Executor', 'Status'] });
@@ -130,6 +132,7 @@ export default (router) => {
       const task = await Task.findByPk(ctx.params.id);
       try {
         await task.destroy();
+        ctx.flash.set(ctx.t('flash-messages:tasks.destroy'));
         ctx.redirect(router.url('tasks#index'));
       } catch (error) {
         const tasks = await Task.findAll({ include: ['Creator', 'Executor', 'Status'] });

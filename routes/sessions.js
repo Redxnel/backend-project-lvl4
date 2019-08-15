@@ -17,21 +17,22 @@ export default (router) => {
       });
       const error = { errors: [] };
       if (!user) {
-        error.errors.push({ path: 'email', message: 'The user is not found!' });
+        error.errors.push({ path: 'email', message: ctx.t('validation:user.unknownUser') });
       }
 
       if (user && user.passwordDigest === encrypt(password)) {
         ctx.session.userId = user.id;
-        ctx.flash.set('You are authorized!');
+        ctx.flash.set(ctx.t('flash-messages:sessions.create'));
         ctx.redirect(router.url('root'));
         return;
       }
 
-      error.errors.push({ path: 'password', message: 'Incorrect password!' });
+      error.errors.push({ path: 'password', message: ctx.t('validation:password.wrongPassword') });
       ctx.render('sessions/new', { f: buildFormObj({ email }, error) });
     })
     .delete('session#destroy', '/session', async (ctx) => {
       ctx.session = {};
+      ctx.flash.set(ctx.t('flash-messages:sessions.destroy'));
       ctx.redirect(router.url('root'));
     });
 };

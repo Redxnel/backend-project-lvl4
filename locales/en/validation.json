@@ -1,0 +1,11 @@
+{
+  "password": {
+    "newPasswordCreate": "Enter new password!",
+    "update": "Your password has been updated!",
+    "confirm": "Passwords do not match!",
+    "wrongPassword": "Incorrect password!"
+  },
+  "user": {
+    "unknownUser": "The user is not found!"
+  }
+}

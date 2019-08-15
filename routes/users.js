@@ -19,7 +19,7 @@ export default (router) => {
       const user = User.build(form.form);
       try {
         await user.save();
-        ctx.flash.set('Your profile has been created');
+        ctx.flash.set(ctx.t('flash-messages:profile.create'));
         ctx.redirect(router.url('root'));
       } catch (err) {
         ctx.flash.set('Something wrong');
@@ -37,7 +37,7 @@ export default (router) => {
       const user = await User.findByPk(userId);
       try {
         await user.update(form.form);
-        ctx.flash.set('Your profile has been updated');
+        ctx.flash.set(ctx.t('flash-messages:profile.update'));
         ctx.redirect(router.url('profile#update'));
       } catch (error) {
         ctx.render('users/profile', { f: buildFormObj(user, error), userId });
@@ -49,7 +49,7 @@ export default (router) => {
       try {
         await user.destroy();
         ctx.session = {};
-        ctx.flash.set('Your profile has been deleted');
+        ctx.flash.set(ctx.t('flash-messages:profile.destroy'));
         ctx.redirect(router.url('root'));
       } catch (error) {
         ctx.render(router.url('profile#show'));
@@ -67,13 +67,13 @@ export default (router) => {
       const error = { errors: [] };
 
       if (!newPassword) {
-        error.errors.push({ path: 'newPassword', message: 'Enter new password!' });
+        error.errors.push({ path: 'newPassword', message: ctx.t('validation:password.newPasswordCreate') });
         ctx.render('users/changePassword', { f: buildFormObj({}, error), userId });
         return;
       }
 
       if (newPassword !== confirmPassword) {
-        error.errors.push({ path: 'confirmPassword', message: 'Passwords do not match' });
+        error.errors.push({ path: 'confirmPassword', message: ctx.t('validation:password.confirm') });
         ctx.render('users/changePassword', { f: buildFormObj({}, error), userId });
         return;
       }
@@ -81,14 +81,14 @@ export default (router) => {
       if (user && user.passwordDigest === encrypt(password)) {
         try {
           await user.update({ password: newPassword });
-          ctx.flash.set('Yor password has been updated');
+          ctx.flash.set(ctx.t('validation:password.update'));
           ctx.redirect(router.url('root'));
           return;
         } catch (e) {
           ctx.render('users/changePassword', { f: buildFormObj(user, e), userId });
         }
       } else {
-        error.errors.push({ path: 'password', message: 'Incorrect password!' });
+        error.errors.push({ path: 'password', message: ctx.t('validation:password.wrongPassword') });
       }
       ctx.render('users/changePassword', { f: buildFormObj({}, error), userId });
     });

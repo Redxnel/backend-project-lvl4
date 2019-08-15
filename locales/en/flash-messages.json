@@ -1,0 +1,21 @@
+{
+  "profile": {
+    "create": "Your profile has been created!",
+    "update": "Your profile has been updated!",
+    "destroy": "Your profile has been deleted!"
+  },
+  "tasks": {
+    "create": "The new task has been created!",
+    "update": "The task has been updated!",
+    "destroy": "The task has been deleted!"
+  },
+  "statuses": {
+    "create": "The new status has been created!",
+    "update": "The status has been updated!",
+    "destroy": "The status has been deleted!"
+  },
+  "sessions": {
+    "create": "You are authorized!",
+    "destroy": "You are logged out!"
+  }
+}

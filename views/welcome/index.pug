@@ -2,6 +2,6 @@ extends /layouts/application.pug
 
 block content
   if isSignedIn()
-    h2(style="font-family: 'Bevan', cursive;") Hello, #{user.firstName}!
+    h2 Hello, #{user.firstName}!
   else
-    h2(style="font-family: 'Bevan', cursive;") Welcome to the Task Manager! Please, sign in or sign up to get started.
+    h2 Welcome to the Task Manager! Please, sign in or sign up to get started.

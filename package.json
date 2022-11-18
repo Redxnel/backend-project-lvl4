@@ -48,7 +48,7 @@
     "jest-supertest-matchers": "0.0.2",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2",
-    "webpack-cli": "^3.3.6"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@babel/cli": "^7.5.5",
